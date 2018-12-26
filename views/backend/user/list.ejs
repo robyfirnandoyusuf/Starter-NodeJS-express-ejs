@@ -1,0 +1,89 @@
+
+<%- include ../../backend-layouts/header.ejs %>
+ 
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+           <% if (messages.error) { %>
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h4><i class="icon fa fa-ban"></i> Error !</h4>
+              <p><%- messages.error %></p>
+            </div>
+            <% } %>
+
+            <% if (messages.success) { %>
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h4><i class="icon fa fa-check"></i> Success !</h4>
+
+                  <p><%- messages.success %></p>
+                </div>
+            <% } %>
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listing Data Users</h3>
+              <a href="/backend/users/add" class="btn btn-info btn-raised pull-right"> <i class="fa fa-plus">Add User</i> </a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+        
+                <% if (data) { %>
+                    <% data.forEach(function(user){ %>
+                    <tr>
+                        <td><%= user.name %></td>
+                        <td><%= user.age %></td>
+                        <td><%= user.email %></td>
+                        <td>
+                            <div style="float:left">
+                                <a class="btn btn-default btn-raised btn-flat" href='/backend/users/edit/<%= user.id %>'>Edit</a>        
+                                <form method="post" action="/backend/users/delete/<%= user.id %>" style="float:right">
+                                    <input type="submit" name="delete" class="btn btn-danger btn-raised btn-flat" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+ 
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../../backend-layouts/footer.ejs %>
+<script type="text/javascript">
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>

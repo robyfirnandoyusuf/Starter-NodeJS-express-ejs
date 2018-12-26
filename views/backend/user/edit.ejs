@@ -1,0 +1,70 @@
+<%- include ../../backend-layouts/header.ejs %>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                   <% if (messages.error) { %>
+                    <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <h4><i class="icon fa fa-ban"></i> Error !</h4>
+                      <p><%- messages.error %></p>
+                    </div>
+                    <% } %>
+
+                    <% if (messages.success) { %>
+                        <div class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <h4><i class="icon fa fa-check"></i> Success !</h4>
+
+                          <p><%- messages.success %></p>
+                        </div>
+                    <% } %>
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Create Users</h3>
+                        </div>
+                          
+                        <div class="box-body">
+                          <form action="/backend/users/edit/<%= id %>" method="post" name="form1">
+                              <input type="hidden" name="_method" value="PUT" />
+                              <div class="box-body">
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Name</label>
+                                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name" name="name" value="<%= name %>">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="exampleInputPassword1">Age</label>
+                                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Age" name="age" value="<%= age %>">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="exampleInputFile">Email</label>
+                                      <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="<%= email %>">
+                                  </div>
+                              </div>
+                              <!-- /.box-body -->
+
+                              <div class="box-footer">
+                                  <button type="submit" name="Submit" class="btn btn-primary btn-raised btn-flat">Submit</button>
+                              </div>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+<%- include ../../backend-layouts/footer.ejs %>
+<script type="text/javascript">
+    $(function() {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+</script>

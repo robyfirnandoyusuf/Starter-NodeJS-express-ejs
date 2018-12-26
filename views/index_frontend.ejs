@@ -1,0 +1,95 @@
+<!--
+including header content which is common for all pages
+-->
+<%- 
+
+include frontend-layouts/header.ejs 
+
+%>    
+ 
+<!--
+including footer content which is common for all pages
+-->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+    <div class="container">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Simple Task Manager
+        </h1>
+        
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        
+      <!-- begin loop -->
+        <% if (data_project) { %>
+            <% data_project.forEach(function(project){ %>
+
+                <div class="col-md-4 ">
+                  <div class="box box-solid">
+                    <div class="box-header with-border">
+                      <i class="fa fa-tasks"></i>
+
+                      <h3 class="box-title"><%= project.project_name %></h3>
+                    </div>
+
+                    <div class="box-body">
+                      <ul class="sort-me" id="<%= project.project_name %>">
+                        
+                        <% arr_detail.forEach(function(dataku){  %>
+                          <li><%=  dataku.task; %></li>
+                        <% });  %>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+            <% }) %>
+        <% } %>
+      <!-- end loop -->
+
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.container -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+<%- include frontend-layouts/footer.ejs %>
+  <script type="text/javascript">
+    $(window).on('load', function() {
+        
+        $(".sort-me li").click(function() {
+            $(this).toggleClass("selected");
+        });
+
+        $(function(){
+            // Could also be ['.sort-me', '#also-sort-me']
+            // var data = $('.sort-me').sortable('serialize');
+            $( ".sort-me" ).sortable({
+        		   connectWith: '.sort-me',
+        		    start: function(e, info) {
+               			 info.item.siblings(".selected").appendTo(info.item);
+        		    },
+        		    stop: function(e, info) {
+        		        info.item.after(info.item.find("li"))
+        		    },
+                update: function (event, ui) {
+          				var order1 = $('#order1').sortable('toArray').toString();
+          				var order2 = $('#order2').sortable('toArray').toString();
+          				console.log("Order 1:" + order1 + "\n Order 2:" + order2 + "\n Order 3:" ); //Just showing update
+          			}
+        		});
+            // $('.sort-me').sortable({connectWith: '.sort-me, #also-sort-me'});
+        });
+
+
+    });
+  </script>
